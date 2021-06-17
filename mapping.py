@@ -99,7 +99,7 @@ class ListActionOperator(bpy.types.Operator):
         elif self.action == 'REMOVE':
             if len(s.mappings) > 0:
                 s.mappings.remove(s.active_mapping)
-                s.active_mapping =  min(s.active_mapping, len(s.mappings) - 1)
+                s.active_mapping = min(s.active_mapping, len(s.mappings) - 1)
 
         return {'FINISHED'}
 

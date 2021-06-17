@@ -299,6 +299,17 @@ class State(bpy.types.PropertyGroup):
         self.editing_alignment = False
         self.editing_mappings = False
 
+    def delete_state(self):
+        self.unleash()
+        self.mappings.clear()
+        self.ik_limbs.clear()
+        self.target_pose_backup.clear()
+        self.active_mapping = 0
+        self.selected_source = None
+        self.source = None
+        #self.invalid_selected_source = None
+        #self.target = None
+
 class UseInvalidOperator(bpy.types.Operator):
     bl_idname = 'retarget.use_invalid_source'
     bl_label = 'Use anyway'

@@ -10,6 +10,7 @@ def draw_panel(layout):
     row.prop(s, 'bake_linear', text='Linear Interpolation')
     layout.operator('retarget_baking.bake')
     layout.operator('retarget_baking.batch_import')
+    layout.operator('retarget_baking.delete_cache')
     pass
 
 def get_keyframes(obj):
@@ -63,6 +64,9 @@ def transfer_anim(context):
                 kp.interpolation = 'LINEAR'
 
     target_action.use_fake_user = True
+    
+def delete_cache():
+    state().delete_state()
 
 class BakeOperator(bpy.types.Operator):
     bl_idname = 'retarget_baking.bake'
@@ -137,8 +141,18 @@ class BatchImportOperator(bpy.types.Operator, ImportHelper):
         bpy.context.window_manager.progress_end()
 
         return {'FINISHED'}
+        
+class DeleteOperator(bpy.types.Operator):
+    bl_idname = 'retarget_baking.delete_cache'
+    bl_label = 'Delete Data'
+    bl_description = 'Delete the data associated with the armature'
+
+    def execute(self, context):
+        delete_cache()
+        return {'FINISHED'}
 
 classes = (
     BakeOperator,
-    BatchImportOperator
+    BatchImportOperator,
+    DeleteOperator
 )
