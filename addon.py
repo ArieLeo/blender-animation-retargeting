@@ -11,7 +11,6 @@ bl_info = {
     'tracker_url': 'https://github.com/Mwni/blender-animation-retargeting/issues',
 }
 
-
 import bpy
 from . import data
 from . import loadsave
@@ -22,8 +21,6 @@ from . import baking
 from . import drivers
 from . import ik
 from .utilfuncs import *
-
-
 
 class MainPanel(bpy.types.Panel):
 	bl_idname = "RT_PT_Main"
@@ -73,10 +70,6 @@ class MainPanel(bpy.types.Panel):
 		else:
 			layout.label(text='No armature selected', icon='ERROR')
 
-
-
-
-
 class State(bpy.types.PropertyGroup):
 	selected_source: bpy.props.PointerProperty(
 		type=bpy.types.Object,
@@ -104,7 +97,6 @@ class State(bpy.types.PropertyGroup):
 	## UI
 	editing_mappings: bpy.props.BoolProperty(default=False)
 	editing_alignment: bpy.props.BoolProperty(default=False)
-
 
 	def is_active(self):
 		return bpy.context.object.type == 'ARMATURE' and self.source != None
@@ -141,7 +133,6 @@ class State(bpy.types.PropertyGroup):
 		self.source = self.selected_source
 		self.update_drivers()
 
-
 	def count_compatible_mappings(self, target):
 		count = 0
 
@@ -150,7 +141,6 @@ class State(bpy.types.PropertyGroup):
 				count += 1
 
 		return count
-
 
 	def get_source_armature(self):
 		return self.source.data
@@ -180,7 +170,6 @@ class State(bpy.types.PropertyGroup):
 			if mapping.target == name:
 				return mapping
 
-
 	def get_alignments_count(self):
 		count = 0
 
@@ -208,7 +197,6 @@ class State(bpy.types.PropertyGroup):
 			baseline = min(baseline, bounds(mesh, True).z.min)
 
 		return baseline
-
 
 	def update_drivers(self):
 		if self.is_importing:
@@ -302,8 +290,6 @@ class State(bpy.types.PropertyGroup):
 
 		self.update_drivers()
 
-
-
 	def reset(self):
 		self.unleash()
 		self.mappings.clear()
@@ -313,19 +299,15 @@ class State(bpy.types.PropertyGroup):
 		self.editing_alignment = False
 		self.editing_mappings = False
 
-
 class UseInvalidOperator(bpy.types.Operator):
 	bl_idname = 'retarget.use_invalid_source'
 	bl_label = 'Use anyway'
-
 
 	def execute(self, context):
 		s = state()
 		s.editing_mappings = True
 		s.selected_source = s.invalid_selected_source
 		return {'FINISHED'}
-
-
 
 classes = (
 	MainPanel, 
@@ -340,13 +322,11 @@ classes = (
 	UseInvalidOperator
 )
 
-
 def register():
 	for clas in classes:
 		bpy.utils.register_class(clas)
 
 	bpy.types.Object.animation_retarget_state = bpy.props.PointerProperty(type=State)
-
 
 def unregister():
 	for clas in classes:

@@ -16,7 +16,6 @@ def matrix4x4_to_data(matrix):
 
 	return values
 
-
 def rot_mat(mat):
 	return mat.to_quaternion().to_matrix().to_4x4()
 

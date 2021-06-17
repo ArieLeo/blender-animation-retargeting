@@ -31,8 +31,6 @@ def find_action(name):
 
 	return None
 
-
-
 def transfer_anim(context):
 	s = state()
 
@@ -66,7 +64,6 @@ def transfer_anim(context):
 
 	target_action.use_fake_user = True
 
-
 class BakeOperator(bpy.types.Operator):
 	bl_idname = 'retarget_baking.bake'
 	bl_label = 'Bake into Action'
@@ -74,8 +71,6 @@ class BakeOperator(bpy.types.Operator):
 	def execute(self, context):
 		transfer_anim(context)
 		return {'FINISHED'}
-
-
 
 class BatchImportOperator(bpy.types.Operator, ImportHelper):
 	bl_idname = 'retarget_baking.batch_import'

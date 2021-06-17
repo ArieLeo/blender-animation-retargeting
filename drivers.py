@@ -9,7 +9,6 @@ def extract_rot_from_mat(mat, axis):
 def extract_loc_from_mat(mat, axis):
 	return getattr(mat.to_translation(), axis)
 
-
 def bone_mat(name, bone, src):
 	mat = Matrix.Translation(Vector(src[0:3]))
 	quat = Quaternion(src[3:])
@@ -52,7 +51,6 @@ def bone_loc(axis, name, bone, *src):
 	mat = bone_mat(name, bone, src)
 	return extract_loc_from_mat(mat, axis)
 
-
 def ik_target_mat(name, index, src):
 	mat = Matrix.Translation(Vector(src[0:3]))
 	quat = Quaternion(src[3:7])
@@ -94,8 +92,6 @@ def ik_target_loc(axis, name, index, *src):
 	mat = ik_target_mat(name, index, src)
 	return extract_loc_from_mat(mat, axis)
 
-
-
 def pack_float_array(array, size=6):
 	return ''.join([(str(round(x, size)) + ('0' * size))[0:size] for x in array])
 
@@ -106,7 +102,6 @@ def unpack_float_array(s, size=6):
 		array.append(float(s[i:i+size]))
 
 	return array
-
 
 def clear():
 	s = state()
@@ -120,7 +115,6 @@ def clear():
 		if limb.target_empty != None:
 			limb.target_empty.driver_remove('location')
 			limb.target_empty.driver_remove('rotation_euler')
-
 
 def create_vars(loc_driver, rot_driver, t, s_source, mapping_source, space, offset=0):
 	src_vars = []
@@ -140,7 +134,6 @@ def create_vars(loc_driver, rot_driver, t, s_source, mapping_source, space, offs
 			src_vars.append(var.name)
 
 	return src_vars
-
 
 def build():
 	bpy.app.driver_namespace['rt_bone_rot'] = bone_rot
@@ -171,10 +164,6 @@ def build():
 			loc_driver.expression = 'rt_bone_loc("%s","%s","%s",%s)' % (axis, s.target.name, mapping.target, ','.join(src_vars))
 			rot_driver.expression = 'rt_bone_rot("%s","%s","%s",%s)' % (axis, s.target.name, mapping.target, ','.join(src_vars))
 
-
-
-
-	
 	for i, limb in enumerate(s.ik_limbs):
 		if not limb.enabled:
 			continue
@@ -195,6 +184,5 @@ def build():
 
 			loc_driver.expression = 'rt_ikt_loc("%s","%s",%i,%s)' % (axis, s.target.name, i, ','.join(src_vars + ctl_vars))
 			rot_driver.expression = 'rt_ikt_rot("%s","%s",%i,%s)' % (axis, s.target.name, i, ','.join(src_vars + ctl_vars))
-
 
 classes = []

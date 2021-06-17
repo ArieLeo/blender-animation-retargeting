@@ -25,8 +25,6 @@ def draw_panel(layout):
 		col.operator('retarget_mappings.list_action', icon='REMOVE', text='').action = 'REMOVE'
 		layout.operator('retarget_mappings.apply', text='Done')
 
-
-
 class RT_UL_mappings(bpy.types.UIList):
 	def draw_item(self, context, layout, data, item, icon, active_data, active_propname, index, flt_flag):
 		s = state()
@@ -44,7 +42,6 @@ class RT_UL_mappings(bpy.types.UIList):
 
 		return flt_flags, flt_neworder
 
-
 class LoadOperator(bpy.types.Operator):
 	bl_idname = 'retarget_mappings.load'
 	bl_label = 'Load'
@@ -60,8 +57,6 @@ class SaveOperator(bpy.types.Operator):
 	def execute(self, context):
 		state().editing_mappings = True
 		return {'FINISHED'}
-
-
 
 class EditOperator(bpy.types.Operator):
 	bl_idname = 'retarget_mappings.edit'
@@ -101,7 +96,6 @@ class ListActionOperator(bpy.types.Operator):
 				s.mappings.remove(s.active_mapping)
 				s.active_mapping =  min(s.active_mapping, len(s.mappings) - 1)
 
-
 		return {'FINISHED'}
 
 class ClearOperator(bpy.types.Operator):
@@ -115,7 +109,6 @@ class ClearOperator(bpy.types.Operator):
 	def execute(self, context):
 		state().reset()
 		return {'FINISHED'}
-
 
 classes = (
 	RT_UL_mappings,

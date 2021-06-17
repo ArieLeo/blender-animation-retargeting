@@ -8,11 +8,10 @@ def draw_panel(layout):
 	row.operator('retarget.load', icon='FILEBROWSER')
 	row.operator('retarget.save', icon='FILE_TICK')
 
-
-
 class LoadOperator(bpy.types.Operator, ImportHelper):
 	bl_idname = 'retarget.load'
 	bl_label = 'Load Config'
+	bl_description = 'Load a previously saved configuration.'
 
 	filter_glob: bpy.props.StringProperty(
 		default='*.rtconf',
@@ -28,6 +27,7 @@ class LoadOperator(bpy.types.Operator, ImportHelper):
 class SaveOperator(bpy.types.Operator, ExportHelper):
 	bl_idname = 'retarget.save'
 	bl_label = 'Save Config'
+    bl_description = 'Save a configuration.'
 	filename_ext = '.rtconf'
 
 	filter_glob: bpy.props.StringProperty(
@@ -41,8 +41,6 @@ class SaveOperator(bpy.types.Operator, ExportHelper):
 			f.write(json.dumps(state().serialize()))
 
 		return {'FINISHED'}
-
-
 
 classes = (
 	LoadOperator,

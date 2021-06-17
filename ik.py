@@ -35,7 +35,6 @@ def clear():
 			bpy.data.objects.remove(limb.control_holder, do_unlink=True)
 			limb.control_holder = None
 
-
 def build():
 	s = state()
 	aux_collection = next((c for c in bpy.data.collections if c.name == 'Retarget Auxiliary'), None)
@@ -49,7 +48,6 @@ def build():
 	if ctl_collection == None:
 		ctl_collection = bpy.data.collections.new('Retarget Control')
 		bpy.context.scene.collection.children.link(ctl_collection)
-
 
 	clear()
 
@@ -122,10 +120,8 @@ def build():
 
 		con.chain_count = tbn + 1
 
-
 		limb.target_empty = te
 		limb.target_empty_child = tec
 		#limb.pole_empty = pe
 		limb.control_holder = ch
 		limb.control_cube = cc
-

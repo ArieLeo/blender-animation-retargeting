@@ -63,7 +63,6 @@ class IKLimb(bpy.types.PropertyGroup):
 		self.origin_bone = l['origin_bone']
 		self.control_transform = l['control_transform']
 
-
 classes = (
 	BoneMapping,
 	BonePose,

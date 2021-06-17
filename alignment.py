@@ -48,7 +48,6 @@ def restore_poses():
 				bone.matrix_basis = data_to_matrix4x4(bp.matrix)
 				break
 
-
 def store_matrices():
 	s = state()
 	for bone in s.target.pose.bones:
@@ -57,13 +56,11 @@ def store_matrices():
 				m.rest = matrix4x4_to_data(bone.matrix)
 				m.offset = matrix4x4_to_data(bone.matrix_basis)
 
-
 def update_rest():
 	enter_offset()
 	store_matrices()
 	restore_poses()
 	state().update_drivers()
-
 
 def leave_edit():
 	if handle_edit_change in bpy.app.handlers.depsgraph_update_post:
@@ -74,11 +71,9 @@ def leave_edit():
 	bpy.ops.object.mode_set(mode='OBJECT')
 	s.update_drivers()
 
-
 def handle_edit_change(self, context):
 	if bpy.context.object.mode != 'POSE':
 		leave_edit()
-
 
 class Panel(bpy.types.Panel):
 	bl_idname = 'RT_PT_Alignment'
@@ -103,15 +98,11 @@ class Panel(bpy.types.Panel):
 				row = self.layout.row()
 				row.label(text='%i bone(s) with offset' % n, icon='BONE_DATA')
 				row.operator('retarget_alignment.edit', text='Edit Alignment')
-
-
 		pass
-
 
 class EditOperator(bpy.types.Operator):
 	bl_idname = 'retarget_alignment.edit'
 	bl_label = 'Change Alignment'
-
 
 	def execute(self, context):
 		s = state()
@@ -124,7 +115,6 @@ class EditOperator(bpy.types.Operator):
 		bpy.app.handlers.depsgraph_update_post.append(handle_edit_change)
 
 		return {'FINISHED'}
-
 
 class ApplyOperator(bpy.types.Operator):
 	bl_idname = 'retarget_alignment.apply'
@@ -147,7 +137,6 @@ class CancelOperator(bpy.types.Operator):
 
 		return {'FINISHED'}
 
-
 class ResetOperator(bpy.types.Operator):
 	bl_idname = 'retarget_alignment.reset'
 	bl_label = 'Reset Rest Pose Alignment'
@@ -165,7 +154,6 @@ class ResetOperator(bpy.types.Operator):
 		s.update_drivers()
 
 		return {'FINISHED'}
-
 
 classes = (
 	EditOperator,

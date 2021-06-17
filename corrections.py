@@ -1,7 +1,6 @@
 import bpy
 from .utilfuncs import *
 
-
 def draw_panel(layout):
 	s = state()
 
@@ -20,8 +19,6 @@ def draw_panel(layout):
 		row = layout.box().row()
 		draw_limb_section(row.column(), 'Left Hand', 'Left Upper Arm', s, s.get_ik_limb('left-hand'))
 		draw_limb_section(row.column(), 'Right Hand', 'Right Upper Arm', s, s.get_ik_limb('right-hand'))
-	
-
 
 def draw_limb_section(layout, target_label, origin_label, s, prop):
 	layout.label(text=origin_label)
@@ -29,15 +26,12 @@ def draw_limb_section(layout, target_label, origin_label, s, prop):
 	layout.label(text=target_label)
 	layout.prop_search(prop, 'target_bone', s.get_target_armature(), 'bones', text='', icon='BONE_DATA')
 
-
-
 class TransferOperator(bpy.types.Operator):
 	bl_idname = 'retarget_anim.transfer'
 	bl_label = 'Transfer Animation'
 
 	def execute(self, context):
 		return {'FINISHED'}
-
 
 class AddIKOperator(bpy.types.Operator):
 	bl_idname = 'retarget_corrections.add_ik'
@@ -58,7 +52,6 @@ class RemoveIKOperator(bpy.types.Operator):
 		state().ik_limbs.clear()
 		return {'FINISHED'}
 
-
 class ApplyIKOperator(bpy.types.Operator):
 	bl_idname = 'retarget_corrections.apply_ik'
 	bl_label = 'Apply'
@@ -66,7 +59,6 @@ class ApplyIKOperator(bpy.types.Operator):
 	def execute(self, context):
 		state().build_ik()
 		return {'FINISHED'}
-
 
 classes = (
 	AddIKOperator,
