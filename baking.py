@@ -7,7 +7,7 @@ def draw_panel(layout):
     s = state()
     row = layout.row()
     row.prop(s, 'bake_step', text='Frame Step')
-    row.prop(s, 'bake_linear', text='Linear Interpolation')
+    row.prop(s, 'bake_interpolation', text='')
     layout.operator('retarget_baking.bake')
     layout.operator('retarget_baking.batch_import')
     layout.operator('retarget_baking.delete_cache')
@@ -58,10 +58,9 @@ def transfer_anim(context):
         only_selected=False
     )
 
-    if s.bake_linear:
-        for fc in s.target.animation_data.action.fcurves:
-            for kp in fc.keyframe_points:
-                kp.interpolation = 'LINEAR'
+    for fc in s.target.animation_data.action.fcurves:
+        for kp in fc.keyframe_points:
+            kp.interpolation = s.bake_interpolation
 
     target_action.use_fake_user = True
     

@@ -92,7 +92,20 @@ class State(bpy.types.PropertyGroup):
     disable_drivers: bpy.props.BoolProperty(update=lambda self, ctx: state().update_drivers())
     is_importing: bpy.props.BoolProperty(default=False)
     bake_step: bpy.props.FloatProperty(default=1.0)
-    bake_linear: bpy.props.BoolProperty(default=False)
+    bake_interpolation: bpy.props.EnumProperty(default='LINEAR', items=(
+        ('CONSTANT', 'Constant', 'No interpolation'),
+        ('LINEAR', 'Linear', 'Straight-line interpolation'),
+        ('BEZIER', 'Bezier', 'Smooth interpolation'),
+        ('SINE', 'Sinusoidal', 'Sinusoidal easing'),
+        ('QUAD', 'Quadratic', 'Quadratic easing'),
+        ('CUBIC', 'Cubic', 'Cubic easing'),
+        ('QUART', 'Quartic', 'Quartic easing'),
+        ('QUINT', 'Quintic', 'Quintic easing'),
+        ('EXPO', 'Exponential', 'Exponential easing'),
+        ('CIRC', 'Circular', 'Circular easing'),
+        ('BACK', 'Back', 'Cubic easing'),
+        ('BOUNCE', 'Bounce', 'Exponentially decaying parabolic bounce'),
+        ('ELASTIC', 'Elastic', 'Exponentially decaying sine wave')))
 
     ## UI
     editing_mappings: bpy.props.BoolProperty(default=False)
