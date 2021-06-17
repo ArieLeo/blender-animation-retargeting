@@ -36,13 +36,16 @@ def clear():
 			limb.control_holder = None
 
 def build():
-	s = state()
+    s = state()
+    
+    if len(s.ik_limbs) <= 0:
+        return
+	
 	aux_collection = next((c for c in bpy.data.collections if c.name == 'Retarget Auxiliary'), None)
 	ctl_collection = next((c for c in bpy.data.collections if c.name == 'Retarget Control'), None)
 
 	if aux_collection == None:
 		aux_collection = bpy.data.collections.new('Retarget Auxiliary')
-		#aux_collection.hide_viewport = True
 		bpy.context.scene.collection.children.link(aux_collection)
 
 	if ctl_collection == None:

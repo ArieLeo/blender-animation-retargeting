@@ -270,9 +270,6 @@ class State(bpy.types.PropertyGroup):
 
         return None
 
-    def build_ik(self):
-        ik.build()
-
     def unleash(self):
         drivers.clear()
         ik.clear()
