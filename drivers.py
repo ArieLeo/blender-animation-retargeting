@@ -154,7 +154,6 @@ def build():
 		loc_drivers = dest_pose.driver_add('location')
 		rot_drivers = dest_pose.driver_add('rotation_euler')
 
-
 		for axis, lfc, rfc in zip(('x','y','z'), loc_drivers, rot_drivers):
 			loc_driver = lfc.driver
 			rot_driver = rfc.driver
