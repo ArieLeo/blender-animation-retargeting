@@ -67,6 +67,11 @@ class MainPanel(bpy.types.Panel):
                         box = layout.box()
                         box.prop(s, 'disable_drivers', text='Disable Drivers')
                         
+                        layout.separator()
+                        layout.label(text='Clean Up')
+                        box = layout.box()
+                        box.operator('retarget.clean', icon='TRASH')
+                        
         else:
             layout.label(text='No armature selected', icon='ERROR')
 
@@ -251,7 +256,6 @@ class State(bpy.types.PropertyGroup):
         if needs_rebuild:
             self.update_drivers()
 
-
     def create_ik_limb(self, name):
         limb = self.ik_limbs.add()
         limb.name = name
@@ -326,11 +330,21 @@ class State(bpy.types.PropertyGroup):
 class UseInvalidOperator(bpy.types.Operator):
     bl_idname = 'retarget.use_invalid_source'
     bl_label = 'Use anyway'
+    bl_description = 'Use the source anyway'
 
     def execute(self, context):
         s = state()
         s.editing_mappings = True
         s.selected_source = s.invalid_selected_source
+        return {'FINISHED'}
+
+class CleanupOperator(bpy.types.Operator):
+    bl_idname = 'retarget.clean'
+    bl_label = 'Clear Data'
+    bl_description = 'Clean all the data driving the retarget'
+
+    def execute(self, context):
+        state().delete_state()
         return {'FINISHED'}
 
 classes = (
@@ -343,7 +357,8 @@ classes = (
     *drivers.classes,
     *baking.classes,
     State,
-    UseInvalidOperator
+    UseInvalidOperator,
+    CleanupOperator
 )
 
 def register():

@@ -32,12 +32,19 @@ def find_action(name):
 
     return None
 
+def find_action_name(target_name, source_action, source_name):
+    return target_name + '|' + source_action.replace(source_name + '|', '')
+
 def transfer_anim(context):
     s = state()
 
     keyframes = get_keyframes(s.source)
     source_action = s.source.animation_data.action
-    target_action_name = s.target.name + '|' + source_action.name.replace(s.source.name + '|', '')
+    
+    print('Source Action:', source_action)
+    print('Target:', s.target)
+    
+    target_action_name = find_action_name(s.target.name, source_action.name, s.source.name)
     target_action = find_action(target_action_name)
 
     if target_action != None:
@@ -58,14 +65,20 @@ def transfer_anim(context):
         only_selected=False
     )
 
-    for fc in s.target.animation_data.action.fcurves:
+    for fc in target_action.fcurves:
         for kp in fc.keyframe_points:
             kp.interpolation = s.bake_interpolation
 
     target_action.use_fake_user = True
     
-def delete_cache():
-    state().delete_state()
+def delete_action():
+    s = state()
+    
+    target_action = find_action(find_action_name(s.target.name, s.source.animation_data.action.name, s.source.name))
+    target_keyframes = target_action.fcurves
+    
+    for fc in target_keyframes:
+        target_keyframes.remove(fc)
 
 class BakeOperator(bpy.types.Operator):
     bl_idname = 'retarget_baking.bake'
@@ -143,11 +156,11 @@ class BatchImportOperator(bpy.types.Operator, ImportHelper):
         
 class DeleteOperator(bpy.types.Operator):
     bl_idname = 'retarget_baking.delete_cache'
-    bl_label = 'Delete Data'
-    bl_description = 'Delete the data associated with the armature'
+    bl_label = 'Clear Bake'
+    bl_description = 'Clear the baked action'
 
     def execute(self, context):
-        delete_cache()
+        delete_action()
         return {'FINISHED'}
 
 classes = (
