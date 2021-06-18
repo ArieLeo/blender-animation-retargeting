@@ -1,16 +1,3 @@
-bl_info = {
-    "name" : "Animation Retargeting",
-    "author" : "Mwni",
-    "description" : "Retarget animations from one rig to another",
-    "version": (1, 0, 0),
-    "blender" : (2, 80, 0),
-    "location" : "3D View > Tools (Right Side) > Retarget",
-    "warning" : "",
-    "category" : "Animation",
-    'wiki_url': 'https://github.com/Mwni/blender-animation-retargeting',
-    'tracker_url': 'https://github.com/Mwni/blender-animation-retargeting/issues',
-}
-
 import bpy
 from . import data
 from . import loadsave
@@ -23,11 +10,11 @@ from . import ik
 from .utilfuncs import *
 
 class MainPanel(bpy.types.Panel):
-    bl_idname = "RT_PT_Main"
-    bl_label = "Animation Retargeting"
-    bl_category = "Retarget"
-    bl_space_type = "VIEW_3D"
-    bl_region_type = "UI"
+    bl_idname = 'RT_PT_Main'
+    bl_label = 'Animation Retargeting'
+    bl_category = 'Retarget'
+    bl_space_type = 'VIEW_3D'
+    bl_region_type = 'UI'
 
     def draw(self, context):
         layout = self.layout
@@ -282,7 +269,8 @@ class State(bpy.types.PropertyGroup):
             'mappings': mappings, 
             'ik_limbs': ik_limbs, 
             'correct_feet': self.correct_feet, 
-            'correct_hands': self.correct_hands
+            'correct_hands': self.correct_hands,
+            'correct_root_pivot': self.correct_root_pivot
         }
 
     def from_serialized(self, data):
@@ -299,6 +287,7 @@ class State(bpy.types.PropertyGroup):
 
         self.correct_feet = data['correct_feet']
         self.correct_hands = data['correct_hands']
+        self.correct_root_pivot = data['correct_root_pivot']
 
         self.is_importing = False
 
